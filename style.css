@@ -129,93 +129,116 @@ hr {
     margin-top: 35px;
 }
 
-.couture-takeover {
-  position: relative;
-  height: 320vh;
-  margin-top: 35px;
+#couture.mheight {
+  height: auto;
+  min-height: 100vh;
+  align-items: flex-start;
 }
 
-.couture-takeover__sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+.couture-carousel {
+  list-style: none;
+  padding: 0;
+  margin: 35px auto 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 12px;
+  width: 100%;
+  max-width: 900px;
 }
 
-.couture-takeover__track {
-  position: relative;
-  width: min(900px, 90vw);
-  height: min(80vh, 620px);
+.couture-carousel::-webkit-scrollbar {
+  height: 8px;
 }
 
-.couture-takeover__slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: scale(0.98);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+.couture-carousel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+}
+
+.couture-carousel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.couture-carousel__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
   margin: 0;
 }
 
-.couture-takeover__slide.is-active {
-  opacity: 1;
-  transform: scale(1);
-  z-index: 2;
-}
-
-.couture-takeover__slide a {
+.couture-carousel__slide a {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.couture-takeover__slide .couture-img {
+.couture-carousel__slide .couture-img {
   width: 100%;
-  height: 100%;
+  height: 60vh;
   margin-bottom: 0;
   object-fit: cover;
   border-radius: 16px;
 }
 
-.couture-takeover__progress {
-  position: absolute;
-  left: 50%;
-  bottom: 32px;
-  transform: translateX(-50%);
-  width: min(320px, 70vw);
-  height: 3px;
-  background: rgba(255, 255, 255, 0.2);
+.couture-carousel {
+  scroll-marker-group: after;
+}
+
+.couture-carousel::scroll-button(*) {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: #fff;
+  padding: 8px 14px;
   border-radius: 999px;
-  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.couture-takeover__bar {
-  display: block;
-  height: 100%;
-  width: 0%;
+.couture-carousel::scroll-button(left) {
+  content: "←";
+}
+
+.couture-carousel::scroll-button(right) {
+  content: "→";
+}
+
+.couture-carousel::scroll-button(*):hover,
+.couture-carousel::scroll-button(*):focus-visible {
+  border-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.couture-carousel::scroll-button(*):disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.couture-carousel::scroll-marker-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.couture-carousel__slide::scroll-marker {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.couture-carousel__slide::scroll-marker:target-current {
   background: #fff;
-  transition: width 0.3s ease;
+  border-color: #fff;
 }
 
-@media screen and (max-width: 900px) {
-  .couture-takeover {
-    height: 260vh;
+@media screen and (max-width: 700px) {
+  .couture-carousel__slide .couture-img {
+    height: 50vh;
   }
-}
-
-@media screen and (max-width: 600px) {
-  .couture-takeover__track {
-    height: 70vh;
-  }
-}
-
-#couture.mheight {
-  height: auto;
-  min-height: 100vh;
-  align-items: flex-start;
 }
 
 .section-imgdes {

@@ -108,46 +108,10 @@ const scroll = new LocomotiveScroll({
   lerp: 0.03,
 });
 
-const coutureTakeover = document.querySelector(".couture-takeover");
+const coutureCarousel = document.querySelector(".couture-carousel");
 
-if (coutureTakeover) {
-  const slides = Array.from(
-    coutureTakeover.querySelectorAll(".couture-takeover__slide")
-  );
-  const progressBar = coutureTakeover.querySelector(".couture-takeover__bar");
-  let activeIndex = 0;
-
-  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-
-  const setActiveSlide = (index) => {
-    activeIndex = index;
-    slides.forEach((slide, slideIndex) => {
-      slide.classList.toggle("is-active", slideIndex === activeIndex);
-    });
-    if (progressBar) {
-      const percent = slides.length > 1
-        ? (activeIndex / (slides.length - 1)) * 100
-        : 100;
-      progressBar.style.width = `${percent}%`;
-    }
-  };
-
-  const updateTakeover = () => {
-    const rect = coutureTakeover.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const scrollable = rect.height - viewportHeight;
-    if (scrollable <= 0) {
-      setActiveSlide(0);
-      return;
-    }
-    const progress = clamp((viewportHeight - rect.top) / scrollable, 0, 1);
-    const targetIndex = Math.round(progress * (slides.length - 1));
-    if (targetIndex !== activeIndex) {
-      setActiveSlide(targetIndex);
-    }
-  };
-
-  const coutureImages = coutureTakeover.querySelectorAll("img");
+if (coutureCarousel) {
+  const coutureImages = coutureCarousel.querySelectorAll("img");
   const waitForImages = () =>
     new Promise((resolve) => {
       if (!coutureImages.length) {
@@ -171,13 +135,8 @@ if (coutureTakeover) {
       });
     });
 
-  setActiveSlide(0);
-  scroll.on("scroll", updateTakeover);
-  window.addEventListener("resize", updateTakeover);
-
   waitForImages().then(() => {
     scroll.update();
-    updateTakeover();
   });
 }
 

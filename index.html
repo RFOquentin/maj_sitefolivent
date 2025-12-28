@@ -215,46 +215,39 @@
           <h2 data-scroll data-scroll-direction="horizontal" data-scroll-speed="-1" data-scroll-target="#couture" class="mtext-white mcenter text-en text-hidden" data-translation="couture-title">Sewing</h2>
           <!-- Ligne horizontale animée en scroll horizontal avec une vitesse de -7 et une largeur de 100% -->
           <hr data-scroll data-scroll-direction="horizontal" data-scroll-speed="1" data-scroll-target="#couture" style="width:100%" class="mopacity">   
-          <!-- Takeover couture : images plein écran avec effet sticky -->
-          <div class="couture-takeover" data-scroll data-scroll-target="#couture">
-            <div class="couture-takeover__sticky">
-              <div class="couture-takeover__track" aria-live="polite">
-                <figure class="couture-takeover__slide is-active">
-                  <a href="images/couture01_open.jpeg" data-lightbox="portfolioa">
-                    <img src="images/couture01.webp" alt="Robe Vionnet" class="couture-img" loading="lazy">
-                  </a>
-                </figure>
-                <figure class="couture-takeover__slide">
-                  <a href="images/couture02_open.jpeg" data-lightbox="portfolioa">
-                    <img src="images/couture02.webp" alt="Costume LoveCraft" class="couture-img" loading="lazy">
-                  </a>
-                </figure>
-                <figure class="couture-takeover__slide">
-                  <a href="images/couture03_open.jpg" data-lightbox="portfolioa">
-                    <img src="images/couture03.webp" alt="Corset Edouardien" class="couture-img" loading="lazy">
-                  </a>
-                </figure>
-                <figure class="couture-takeover__slide">
-                  <a href="images/couture04_open.jpeg" data-lightbox="portfolioa">
-                    <img src="images/couture04.webp" alt="Robe croisée" class="couture-img" loading="lazy">
-                  </a>
-                </figure>
-                <figure class="couture-takeover__slide">
-                  <a href="images/couture05_open.jpeg" data-lightbox="portfolioa">
-                    <img src="images/couture05.webp" alt="Kimonos Lola" class="couture-img" loading="lazy">
-                  </a>
-                </figure>
-                <figure class="couture-takeover__slide">
-                  <a href="images/couture06_open.jpeg" data-lightbox="portfolioa">
-                    <img src="images/couture06.webp" alt="Robe 1900" class="couture-img" loading="lazy">
-                  </a>
-                </figure>
-              </div>
-              <div class="couture-takeover__progress" aria-hidden="true">
-                <span class="couture-takeover__bar"></span>
-              </div>
-            </div>
-          </div>
+          <!-- Carousel CSS (scroll snap + scroll buttons/markers) -->
+          <ul class="couture-carousel" data-scroll data-scroll-target="#couture" aria-label="Galerie couture">
+            <li class="couture-carousel__slide">
+              <a href="images/couture01_open.jpeg" data-lightbox="portfolioa">
+                <img src="images/couture01.webp" alt="Robe Vionnet" class="couture-img" loading="lazy">
+              </a>
+            </li>
+            <li class="couture-carousel__slide">
+              <a href="images/couture02_open.jpeg" data-lightbox="portfolioa">
+                <img src="images/couture02.webp" alt="Costume LoveCraft" class="couture-img" loading="lazy">
+              </a>
+            </li>
+            <li class="couture-carousel__slide">
+              <a href="images/couture03_open.jpg" data-lightbox="portfolioa">
+                <img src="images/couture03.webp" alt="Corset Edouardien" class="couture-img" loading="lazy">
+              </a>
+            </li>
+            <li class="couture-carousel__slide">
+              <a href="images/couture04_open.jpeg" data-lightbox="portfolioa">
+                <img src="images/couture04.webp" alt="Robe croisée" class="couture-img" loading="lazy">
+              </a>
+            </li>
+            <li class="couture-carousel__slide">
+              <a href="images/couture05_open.jpeg" data-lightbox="portfolioa">
+                <img src="images/couture05.webp" alt="Kimonos Lola" class="couture-img" loading="lazy">
+              </a>
+            </li>
+            <li class="couture-carousel__slide">
+              <a href="images/couture06_open.jpeg" data-lightbox="portfolioa">
+                <img src="images/couture06.webp" alt="Robe 1900" class="couture-img" loading="lazy">
+              </a>
+            </li>
+          </ul>
         </div>
       </section>
     </div>
