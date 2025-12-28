@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="is-smooth-scroll-compatible is-loading">
+<html class="is-smooth-scroll-compatible is-loading" lang="fr">
 <head>
   <!-- Titre et favicon -->
   <title>Hélène Girardin - Couturière et Artiste Passionnée | Saint-Pierre & Miquelon</title>
@@ -41,13 +41,13 @@
   <nav class="nav-sidebar visible" id="sidebar">
     <!-- Avatar -->
     <div class="nav-avatar">
-      <img src="images/portrait.jpg" alt="Avatar">
+      <img src="images/portrait.jpg" alt="Avatar" loading="lazy">
     </div>
     <!-- Éléments de navigation -->
     <ul class="nav-items">
       <!-- Accueil -->
       <li class="nav-item" data-scroll>
-        <a href=".hero-banner" class="nav-link  nav-lien">
+        <a href="#home" class="nav-link  nav-lien">
           <img src="icons/home.svg" class="nav-icon" alt="home" />
           <span class="text-fr text-active" data-translation="home_nav">Accueil</span>
           <span class="text-en text-hidden" data-translation="home_nav">Home</span>
@@ -99,12 +99,12 @@
   <!-- Barre de navigation pour petits écrans (cachée sur les écrans moyens et grands) -->
   <nav class="custom-top custom-hide-large-medium" id="myNavbar">
     <div class="custom-bar">
-      <a href=".hero-banner" class="custom-bar-item nav-lien"><img src="icons/home.svg" alt="home" /></a>
-      <a href="#about" class="custom-bar-item nav-lien"><img src="icons/about.svg" alt="about" /></a>
-      <a href="#couture" class="custom-bar-item nav-lien"><img src="icons/scissors.svg" alt="Couture" /></a>
-      <a href="#dessins" class="custom-bar-item nav-lien"><img src="icons/dessins.svg" alt="dessins" /></a>
-      <a href="#arts_numeriques" class="custom-bar-item nav-lien"><img src="icons/digital.svg" alt="digital" /></a>
-      <a href="#contact" class="custom-bar-item nav-lien"><img src="icons/mail.svg" alt="contact" /></a>
+        <a href="#home" class="custom-bar-item nav-lien" aria-label="Accueil"><img src="icons/home.svg" alt="home" /></a>
+      <a href="#about" class="custom-bar-item nav-lien" aria-label="À propos"><img src="icons/about.svg" alt="about" /></a>
+      <a href="#couture" class="custom-bar-item nav-lien" aria-label="Couture"><img src="icons/scissors.svg" alt="Couture" /></a>
+      <a href="#dessins" class="custom-bar-item nav-lien" aria-label="Dessins et Peintures"><img src="icons/dessins.svg" alt="dessins" /></a>
+      <a href="#arts_numeriques" class="custom-bar-item nav-lien" aria-label="Art Digital"><img src="icons/digital.svg" alt="digital" /></a>
+      <a href="#contact" class="custom-bar-item nav-lien" aria-label="Contact"><img src="icons/mail.svg" alt="contact" /></a>
     </div>
   </nav>
 
@@ -126,12 +126,12 @@
   <div data-scroll-container>
     
     <!-- Bannière du héros (image de fond en grand) -->
-    <hero data-scroll-section="" class="hero-banner">
+    <header data-scroll-section="" class="hero-banner" id="home">
       <!-- Image de fond avec effet de parallaxe -->
-      <div data-scroll data-scroll-speed="-9" data-scroll-target=".hero-banner" data-scroll-position="top" class="background-image" id="home"></div>
+      <div data-scroll data-scroll-speed="-9" data-scroll-target=".hero-banner" data-scroll-position="top" class="background-image"></div>
       
       <!-- Conteneur du titre -->
-      <div class="title-container" id="main">
+      <div class="title-container">
         <!-- Conteneur du titre du héros avec effet de défilement -->
         <div class="hero-title-container" data-scroll data-scroll-repeat="true">
           <!-- Titre du héros avec effet de défilement sur chaque lettre -->
@@ -146,7 +146,7 @@
       </div>
       <!-- Espace vide pour ajuster la hauteur de la bannière -->
       <div data-scroll class="rep100"></div>
-    </hero>
+    </header>
   
 
     <div data-scroll-section="" class="mpadding-large mcenter mitenu" id="main">
@@ -156,14 +156,14 @@
       <!-- Image de profil pour grands écrans -->
       <div data-scroll class="about-portraitc about-portrait-desktop">
         <div data-scroll data-scroll-speed="6" data-scroll-target="#about" data-scroll-repeat="true" class="about-portrait">
-          <img class="portrait" src="images/portrait.jpg" alt="Votre photo" style="width:100%">
+          <img class="portrait" src="images/portrait.jpg" alt="Votre photo" style="width:100%" loading="lazy">
         </div>
       </div>
 
       <!-- Image de profil pour téléphones -->
       <div data-scroll class="about-portraitc about-portrait-mobile">
         <div data-scroll data-scroll-sticky data-scroll-target="#about" data-scroll-repeat="true" data-scroll-position="bottom" class="about-portrait">
-          <img class="portrait" src="images/portrait.jpg" alt="Votre photo" style="width:100%">
+          <img class="portrait" src="images/portrait.jpg" alt="Votre photo" style="width:100%" loading="lazy">
         </div>
       </div>
     

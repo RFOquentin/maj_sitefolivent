@@ -34,27 +34,6 @@ const initialEntry = {
 };
 handleIntersection([initialEntry], observer);
 
-// Ajout d'écouteurs d'événements pour les transitions et les interactions avec l'élément ayant l'ID "title"
-document.addEventListener("DOMContentLoaded", function () {
-  const title = document.getElementById("title");
-
-  // Fonction pour gérer la fin de la transition d'opacité pour l'élément 'title'
-  function handleTransitionEnd(event) {
-    if (event.propertyName === "opacity") {
-      title.classList.add("animation-finished");
-
-      title.addEventListener("mouseover", function () {
-        title.classList.add("hovered");
-      });
-
-      title.addEventListener("mouseout", function () {
-        title.classList.remove("hovered");
-      });
-    }
-  }
-});
-
-
 // Fonction pour basculer entre les traductions de texte
 function toggleTranslation() {
     const textsFr = document.querySelectorAll(".text-fr");
