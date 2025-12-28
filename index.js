@@ -210,6 +210,18 @@ if (coutureCarousel && coutureSection) {
     },
     { passive: false }
   );
+
+  scroll.on("scroll", () => {
+    if (!isSectionInView()) {
+      setScrollLock(false);
+      return;
+    }
+    if (canScrollCarousel(1) || canScrollCarousel(-1)) {
+      setScrollLock(true);
+    } else {
+      setScrollLock(false);
+    }
+  });
 }
 
     
