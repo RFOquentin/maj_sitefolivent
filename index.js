@@ -109,6 +109,7 @@ const scroll = new LocomotiveScroll({
 });
 
 const coutureCarousel = document.querySelector(".couture-carousel");
+const coutureSection = document.getElementById("couture");
 
 if (coutureCarousel) {
   const coutureImages = coutureCarousel.querySelectorAll("img");
@@ -138,6 +139,43 @@ if (coutureCarousel) {
   waitForImages().then(() => {
     scroll.update();
   });
+}
+
+if (coutureCarousel && coutureSection) {
+  const canScrollCarousel = (deltaY) => {
+    const maxScrollLeft =
+      coutureCarousel.scrollWidth - coutureCarousel.clientWidth;
+    if (maxScrollLeft <= 0) {
+      return false;
+    }
+    if (deltaY > 0) {
+      return coutureCarousel.scrollLeft < maxScrollLeft;
+    }
+    return coutureCarousel.scrollLeft > 0;
+  };
+
+  const isSectionInView = () => {
+    const rect = coutureSection.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    return rect.top < viewportHeight * 0.6 && rect.bottom > viewportHeight * 0.4;
+  };
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+      if (!isSectionInView()) {
+        return;
+      }
+      if (canScrollCarousel(event.deltaY)) {
+        event.preventDefault();
+        coutureCarousel.scrollBy({
+          left: event.deltaY,
+          behavior: "smooth",
+        });
+      }
+    },
+    { passive: false }
+  );
 }
 
     
