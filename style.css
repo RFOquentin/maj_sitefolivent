@@ -135,20 +135,29 @@ hr {
 
 .embla__viewport {
   overflow: hidden;
+  width: 100%;
 }
 
 .embla__container {
   display: flex;
   gap: 24px;
+  flex-wrap: nowrap;
 }
 
 .embla__slide {
   flex: 0 0 70%;
   min-width: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .embla__slide a {
   display: block;
+  width: 100%;
+}
+
+.embla__slide .couture-img {
+  margin-bottom: 0;
 }
 
 .embla__controls {
@@ -223,6 +232,12 @@ hr {
   .embla__slide {
     flex: 0 0 100%;
   }
+}
+
+#couture.mheight {
+  height: auto;
+  min-height: 100vh;
+  align-items: flex-start;
 }
 
 .section-imgdes {
