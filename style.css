@@ -129,6 +129,102 @@ hr {
     margin-top: 35px;
 }
 
+.embla {
+  margin-top: 35px;
+}
+
+.embla__viewport {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  gap: 24px;
+}
+
+.embla__slide {
+  flex: 0 0 70%;
+  min-width: 0;
+}
+
+.embla__slide a {
+  display: block;
+}
+
+.embla__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.embla__buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.embla__button {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.embla__button:hover {
+  border-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.embla__button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.embla__button:focus-visible,
+.embla__dot:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.embla__dots {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.embla__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.embla__dot.is-selected {
+  background: #fff;
+  border-color: #fff;
+}
+
+@media screen and (max-width: 900px) {
+  .embla__slide {
+    flex: 0 0 85%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .embla__slide {
+    flex: 0 0 100%;
+  }
+}
+
 .section-imgdes {
   display: flex;
   flex-wrap: wrap;

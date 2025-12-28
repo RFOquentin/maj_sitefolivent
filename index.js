@@ -108,6 +108,102 @@ const scroll = new LocomotiveScroll({
   lerp: 0.03,
 });
 
+const emblaViewport = document.querySelector(".embla__viewport");
+
+if (emblaViewport && window.EmblaCarousel) {
+  const embla = EmblaCarousel(emblaViewport, {
+    loop: true,
+    align: "start",
+    containScroll: "trimSnaps",
+    dragFree: false,
+  });
+  const emblaRoot = emblaViewport.closest(".embla");
+  const prevButton = emblaRoot.querySelector(".embla__button--prev");
+  const nextButton = emblaRoot.querySelector(".embla__button--next");
+  const dotsNode = emblaRoot.querySelector(".embla__dots");
+  let dots = [];
+
+  const setButtonState = () => {
+    prevButton.disabled = !embla.canScrollPrev();
+    nextButton.disabled = !embla.canScrollNext();
+  };
+
+  const setSelectedDot = () => {
+    const selectedIndex = embla.selectedScrollSnap();
+    dots.forEach((dot, index) => {
+      const isSelected = index === selectedIndex;
+      dot.classList.toggle("is-selected", isSelected);
+      dot.setAttribute("aria-selected", String(isSelected));
+      dot.setAttribute("tabindex", isSelected ? "0" : "-1");
+    });
+  };
+
+  const setupDots = () => {
+    dotsNode.innerHTML = "";
+    dots = embla.scrollSnapList().map((_, index) => {
+      const dot = document.createElement("button");
+      dot.classList.add("embla__dot");
+      dot.type = "button";
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-label", `Aller à la création ${index + 1}`);
+      dot.addEventListener("click", () => embla.scrollTo(index));
+      dotsNode.appendChild(dot);
+      return dot;
+    });
+    setSelectedDot();
+  };
+
+  prevButton.addEventListener("click", () => embla.scrollPrev());
+  nextButton.addEventListener("click", () => embla.scrollNext());
+
+  embla.on("init", () => {
+    setupDots();
+    setButtonState();
+    scroll.update();
+  });
+  embla.on("select", () => {
+    setSelectedDot();
+    setButtonState();
+  });
+  embla.on("reInit", () => {
+    setupDots();
+    setButtonState();
+    scroll.update();
+  });
+
+  setupDots();
+  setButtonState();
+
+  const emblaImages = emblaRoot.querySelectorAll("img");
+  const waitForEmblaImages = () =>
+    new Promise((resolve) => {
+      if (!emblaImages.length) {
+        resolve();
+        return;
+      }
+      let loaded = 0;
+      const handleLoad = () => {
+        loaded += 1;
+        if (loaded === emblaImages.length) {
+          resolve();
+        }
+      };
+      emblaImages.forEach((image) => {
+        if (image.complete) {
+          handleLoad();
+        } else {
+          image.addEventListener("load", handleLoad, { once: true });
+          image.addEventListener("error", handleLoad, { once: true });
+        }
+      });
+    });
+
+  waitForEmblaImages().then(() => {
+    embla.reInit();
+    scroll.update();
+  });
+}
+
     
 /*/ Initialisation de Locomotive Scroll
 const scroll = new LocomotiveScroll({
