@@ -103,9 +103,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Initialisation de Locomotive Scroll
 const scroll = new LocomotiveScroll({
   el: document.querySelector("[data-scroll-container]"),
-  smooth: true,
+  smooth: false,
   smoothMobile: false,
-  lerp: 0.03,
 });
 
 const coutureCarousel = document.querySelector(".couture-carousel");
