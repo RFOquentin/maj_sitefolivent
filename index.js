@@ -108,87 +108,60 @@ const scroll = new LocomotiveScroll({
   lerp: 0.03,
 });
 
-const emblaViewport = document.querySelector(".embla__viewport");
+const coutureTakeover = document.querySelector(".couture-takeover");
 
-if (emblaViewport && window.EmblaCarousel) {
-  const embla = EmblaCarousel(emblaViewport, {
-    loop: true,
-    align: "start",
-    containScroll: "trimSnaps",
-    dragFree: false,
-  });
-  const emblaRoot = emblaViewport.closest(".embla");
-  const prevButton = emblaRoot.querySelector(".embla__button--prev");
-  const nextButton = emblaRoot.querySelector(".embla__button--next");
-  const dotsNode = emblaRoot.querySelector(".embla__dots");
-  let dots = [];
+if (coutureTakeover) {
+  const slides = Array.from(
+    coutureTakeover.querySelectorAll(".couture-takeover__slide")
+  );
+  const progressBar = coutureTakeover.querySelector(".couture-takeover__bar");
+  let activeIndex = 0;
 
-  const setButtonState = () => {
-    prevButton.disabled = !embla.canScrollPrev();
-    nextButton.disabled = !embla.canScrollNext();
-  };
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-  const setSelectedDot = () => {
-    const selectedIndex = embla.selectedScrollSnap();
-    dots.forEach((dot, index) => {
-      const isSelected = index === selectedIndex;
-      dot.classList.toggle("is-selected", isSelected);
-      dot.setAttribute("aria-selected", String(isSelected));
-      dot.setAttribute("tabindex", isSelected ? "0" : "-1");
+  const setActiveSlide = (index) => {
+    activeIndex = index;
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle("is-active", slideIndex === activeIndex);
     });
+    if (progressBar) {
+      const percent = slides.length > 1
+        ? (activeIndex / (slides.length - 1)) * 100
+        : 100;
+      progressBar.style.width = `${percent}%`;
+    }
   };
 
-  const setupDots = () => {
-    dotsNode.innerHTML = "";
-    dots = embla.scrollSnapList().map((_, index) => {
-      const dot = document.createElement("button");
-      dot.classList.add("embla__dot");
-      dot.type = "button";
-      dot.setAttribute("role", "tab");
-      dot.setAttribute("aria-label", `Aller à la création ${index + 1}`);
-      dot.addEventListener("click", () => embla.scrollTo(index));
-      dotsNode.appendChild(dot);
-      return dot;
-    });
-    setSelectedDot();
+  const updateTakeover = () => {
+    const rect = coutureTakeover.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const scrollable = rect.height - viewportHeight;
+    if (scrollable <= 0) {
+      setActiveSlide(0);
+      return;
+    }
+    const progress = clamp((viewportHeight - rect.top) / scrollable, 0, 1);
+    const targetIndex = Math.round(progress * (slides.length - 1));
+    if (targetIndex !== activeIndex) {
+      setActiveSlide(targetIndex);
+    }
   };
 
-  prevButton.addEventListener("click", () => embla.scrollPrev());
-  nextButton.addEventListener("click", () => embla.scrollNext());
-
-  embla.on("init", () => {
-    setupDots();
-    setButtonState();
-    scroll.update();
-  });
-  embla.on("select", () => {
-    setSelectedDot();
-    setButtonState();
-  });
-  embla.on("reInit", () => {
-    setupDots();
-    setButtonState();
-    scroll.update();
-  });
-
-  setupDots();
-  setButtonState();
-
-  const emblaImages = emblaRoot.querySelectorAll("img");
-  const waitForEmblaImages = () =>
+  const coutureImages = coutureTakeover.querySelectorAll("img");
+  const waitForImages = () =>
     new Promise((resolve) => {
-      if (!emblaImages.length) {
+      if (!coutureImages.length) {
         resolve();
         return;
       }
       let loaded = 0;
       const handleLoad = () => {
         loaded += 1;
-        if (loaded === emblaImages.length) {
+        if (loaded === coutureImages.length) {
           resolve();
         }
       };
-      emblaImages.forEach((image) => {
+      coutureImages.forEach((image) => {
         if (image.complete) {
           handleLoad();
         } else {
@@ -198,9 +171,13 @@ if (emblaViewport && window.EmblaCarousel) {
       });
     });
 
-  waitForEmblaImages().then(() => {
-    embla.reInit();
+  setActiveSlide(0);
+  scroll.on("scroll", updateTakeover);
+  window.addEventListener("resize", updateTakeover);
+
+  waitForImages().then(() => {
     scroll.update();
+    updateTakeover();
   });
 }
 
