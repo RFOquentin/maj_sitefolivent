@@ -142,6 +142,7 @@ if (coutureCarousel) {
 }
 
 if (coutureCarousel && coutureSection) {
+  let scrollLocked = false;
   const canScrollCarousel = (deltaY) => {
     const maxScrollLeft =
       coutureCarousel.scrollWidth - coutureCarousel.clientWidth;
@@ -160,18 +161,51 @@ if (coutureCarousel && coutureSection) {
     return rect.top < viewportHeight * 0.6 && rect.bottom > viewportHeight * 0.4;
   };
 
+  const setScrollLock = (locked) => {
+    if (locked === scrollLocked) {
+      return;
+    }
+    scrollLocked = locked;
+    if (locked) {
+      scroll.stop();
+    } else {
+      scroll.start();
+    }
+  };
+
   window.addEventListener(
     "wheel",
     (event) => {
       if (!isSectionInView()) {
+        setScrollLock(false);
         return;
       }
       if (canScrollCarousel(event.deltaY)) {
         event.preventDefault();
+        setScrollLock(true);
         coutureCarousel.scrollBy({
           left: event.deltaY,
           behavior: "smooth",
         });
+      } else {
+        setScrollLock(false);
+      }
+    },
+    { passive: false }
+  );
+
+  window.addEventListener(
+    "touchmove",
+    (event) => {
+      if (!isSectionInView()) {
+        setScrollLock(false);
+        return;
+      }
+      if (canScrollCarousel(1)) {
+        event.preventDefault();
+        setScrollLock(true);
+      } else {
+        setScrollLock(false);
       }
     },
     { passive: false }
