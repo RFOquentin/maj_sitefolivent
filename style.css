@@ -175,8 +175,8 @@ hr {
 
 .couture-carousel__slide .couture-img {
   width: 100%;
-  height: 45vh;
-  max-height: 420px;
+  height: 35vh;
+  max-height: 320px;
   margin-bottom: 0;
   object-fit: cover;
   border-radius: 16px;
@@ -238,8 +238,8 @@ hr {
 
 @media screen and (max-width: 700px) {
   .couture-carousel__slide .couture-img {
-    height: 40vh;
-    max-height: 320px;
+    height: 30vh;
+    max-height: 240px;
   }
 }
 

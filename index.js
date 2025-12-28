@@ -143,6 +143,8 @@ if (coutureCarousel) {
 
 if (coutureCarousel && coutureSection) {
   let scrollLocked = false;
+  const rootElement = document.documentElement;
+  const bodyElement = document.body;
   const canScrollCarousel = (deltaY) => {
     const maxScrollLeft =
       coutureCarousel.scrollWidth - coutureCarousel.clientWidth;
@@ -168,8 +170,12 @@ if (coutureCarousel && coutureSection) {
     scrollLocked = locked;
     if (locked) {
       scroll.stop();
+      rootElement.style.overflow = "hidden";
+      bodyElement.style.overflow = "hidden";
     } else {
       scroll.start();
+      rootElement.style.overflow = "";
+      bodyElement.style.overflow = "";
     }
   };
 
