@@ -72,6 +72,21 @@ window.addEventListener("load", function () {
 document.querySelector(".custom-top").classList.add("visible");
 });
 
+// Active les animations basées sur la visibilité sans Locomotive Scroll
+const scrollElements = document.querySelectorAll("[data-scroll]");
+if (scrollElements.length) {
+  const inViewObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("is-inview", entry.isIntersecting);
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  scrollElements.forEach((element) => inViewObserver.observe(element));
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const customCursor = document.getElementById("loading-cursor");
 
