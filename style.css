@@ -541,6 +541,7 @@ hr {
     flex-direction: column;
     align-items: center;
     padding-top: 24px;
+    text-align: left;
   }
 }
 
@@ -569,6 +570,8 @@ hr {
     min-height: auto;
     width: 100%;
     max-width: 340px;
+    transform: none;
+    opacity: 1;
   }
 }
 
@@ -591,6 +594,21 @@ hr {
     flex-basis: 100%;
     padding-left: 0;
     text-align: left;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-portrait {
+    justify-content: center;
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto 16px;
+    opacity: 1;
+  }
+
+  .about-portrait img {
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -628,12 +646,29 @@ hr {
   opacity: 1;
 }
 
+@media (max-width: 600px) {
+  .about-titrec,
+  .about-titre,
+  #text-containerv {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .mheight {
   height: 100vh;
   display:flex; 
   flex-direction:row; 
   align-items:center; 
   justify-content:center;
+}
+
+@media screen and (max-width: 600px) {
+  .mheight {
+    height: auto;
+    min-height: 0;
+    padding: 32px 0;
+  }
 }
 
 
