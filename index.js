@@ -72,6 +72,21 @@ window.addEventListener("load", function () {
 document.querySelector(".custom-top").classList.add("visible");
 });
 
+// Active les animations basées sur la visibilité sans Locomotive Scroll
+const scrollElements = document.querySelectorAll("[data-scroll]");
+if (scrollElements.length) {
+  const inViewObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("is-inview", entry.isIntersecting);
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  scrollElements.forEach((element) => inViewObserver.observe(element));
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const customCursor = document.getElementById("loading-cursor");
 
@@ -100,68 +115,134 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
     
-// Initialisation de Locomotive Scroll
-const scroll = new LocomotiveScroll({
-  el: document.querySelector("[data-scroll-container]"),
-  smooth: true,
-  smoothMobile: false,
-  lerp: 0.03,
-});
+const coutureCarousel = document.querySelector(".couture-carousel");
+const coutureSection = document.getElementById("couture");
 
-    
-/*/ Initialisation de Locomotive Scroll
-const scroll = new LocomotiveScroll({
-el: document.querySelector("[data-scroll-container]"),
-smooth: true,
-smoothMobile: true,
-multiplier: 1.4, // Effect Multiplier
-touchMultiplier: 2.22,
-//lerp: .03, // Linear Interpolation, 0 > 1 // Try 0.01
-smartphone: {
-  smooth: true,
-  breakpoint: 767
-},
-tablet: {
-  smooth: true,
-  breakpoint: 1024
-},
+if (coutureCarousel) {
+  const coutureImages = coutureCarousel.querySelectorAll("img");
+  const waitForImages = () =>
+    new Promise((resolve) => {
+      if (!coutureImages.length) {
+        resolve();
+        return;
+      }
+      let loaded = 0;
+      const handleLoad = () => {
+        loaded += 1;
+        if (loaded === coutureImages.length) {
+          resolve();
+        }
+      };
+      coutureImages.forEach((image) => {
+        if (image.complete) {
+          handleLoad();
+        } else {
+          image.addEventListener("load", handleLoad, { once: true });
+          image.addEventListener("error", handleLoad, { once: true });
+        }
+      });
+    });
 
+  waitForImages();
+}
 
-});
+if (coutureCarousel && coutureSection) {
+  let scrollLocked = false;
+  const rootElement = document.documentElement;
+  const bodyElement = document.body;
+  const canScrollCarousel = (deltaY) => {
+    const maxScrollLeft =
+      coutureCarousel.scrollWidth - coutureCarousel.clientWidth;
+    if (maxScrollLeft <= 0) {
+      return false;
+    }
+    if (deltaY > 0) {
+      return coutureCarousel.scrollLeft < maxScrollLeft;
+    }
+    return coutureCarousel.scrollLeft > 0;
+  };
 
+  const isSectionInView = () => {
+    const rect = coutureSection.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    return rect.top < viewportHeight * 0.6 && rect.bottom > viewportHeight * 0.4;
+  };
 
-/*const scroll = new LocomotiveScroll({
-  el: document.querySelector('[data-scroll-container]'),
-  smooth: true,
-  lerp: 0.03, // Linear Interpolation, 0 > 1 // Try 0.01
-  multiplier: 1.4, // Effect Multiplier
-  reloadOnContextChange: true,
-  touchMultiplier: 2,
-  smoothMobile: 0,
-  smartphone: {
-      smooth: !0,
-      breakpoint: 767
-  },
-  tablet: {
-      smooth: !1,
-      breakpoint: 1024
-  },
-});*/
+  const setScrollLock = (locked) => {
+    if (locked === scrollLocked) {
+      return;
+    }
+    scrollLocked = locked;
+    if (locked) {
+      rootElement.style.overflow = "hidden";
+      bodyElement.style.overflow = "hidden";
+    } else {
+      rootElement.style.overflow = "";
+      bodyElement.style.overflow = "";
+    }
+  };
 
+  window.addEventListener(
+    "wheel",
+    (event) => {
+      if (!isSectionInView()) {
+        setScrollLock(false);
+        return;
+      }
+      if (canScrollCarousel(event.deltaY)) {
+        event.preventDefault();
+        setScrollLock(true);
+        coutureCarousel.scrollBy({
+          left: event.deltaY,
+          behavior: "smooth",
+        });
+      } else {
+        setScrollLock(false);
+      }
+    },
+    { passive: false }
+  );
 
+  window.addEventListener(
+    "touchmove",
+    (event) => {
+      if (!isSectionInView()) {
+        setScrollLock(false);
+        return;
+      }
+      if (canScrollCarousel(1)) {
+        event.preventDefault();
+        setScrollLock(true);
+      } else {
+        setScrollLock(false);
+      }
+    },
+    { passive: false }
+  );
 
-// Mise à jour de Locomotive Scroll lors du redimensionnement de la fenêtre
-new ResizeObserver(() => scroll.update()).observe(
-document.querySelector("[data-scroll-container]")
-);
+  window.addEventListener("scroll", () => {
+    if (!isSectionInView()) {
+      setScrollLock(false);
+      return;
+    }
+    if (canScrollCarousel(1) || canScrollCarousel(-1)) {
+      setScrollLock(true);
+    } else {
+      setScrollLock(false);
+    }
+  });
+}
 
 // Gestion du défilement vers les sections lors du clic sur les liens de navigation
 const links = document.querySelectorAll(".nav-lien");
 links.forEach(link => {
-link.addEventListener("click", e => {
+  link.addEventListener("click", e => {
     e.preventDefault();
-    scroll.scrollTo(link.getAttribute("href"));
-});
+    const target = document.querySelector(link.getAttribute("href"));
+    if (target) {
+      target.scrollIntoView({ behavior: "auto", block: "start" });
+    }
+  });
 });
 
 // Gestion du preloader
@@ -190,27 +271,29 @@ loader.addEventListener('animationend', () => {
 
 
 // Gestion de l'ajout et de la suppression de la classe 'pointer-enabled' en fonction de la visibilité de l'élément
-let pointerEnabled = false;
-scroll.on('scroll', () => {
 const sectionImgd = document.querySelector('.section-imgd');
+if (sectionImgd) {
+  let pointerEnabled = false;
+  const pointerObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (!sectionImgd.classList.contains('pointer-enabled') && !pointerEnabled) {
+          setTimeout(() => {
+            sectionImgd.classList.add('pointer-enabled');
+          }, 1000);
+          pointerEnabled = true;
+        }
+      } else {
+        if (sectionImgd.classList.contains('pointer-enabled')) {
+          sectionImgd.classList.remove('pointer-enabled');
+          pointerEnabled = false;
+        }
+      }
+    });
+  }, { threshold: 0.3 });
 
-if (sectionImgd.classList.contains('is-inview')) {
-    if (!sectionImgd.classList.contains('pointer-enabled') && !pointerEnabled) {
-    setTimeout(() => {
-        sectionImgd.classList.add('pointer-enabled');
-        console.log('Classe pointer-enabled ajoutée !');
-    }, 1000);
-    pointerEnabled = true;
-    }
-} else {
-    if (sectionImgd.classList.contains('pointer-enabled')) {
-    sectionImgd.classList.remove('pointer-enabled');
-    console.log('Classe pointer-enabled retirée !');
-    pointerEnabled = false;
-    }
+  pointerObserver.observe(sectionImgd);
 }
-
-});
   
 document.getElementById('show-contact-form').addEventListener('click', function(event) {
   event.preventDefault();
@@ -236,7 +319,7 @@ contactLink.addEventListener('click', e => {
   
   // Attendez 500 millisecondes avant de faire défiler la page
   setTimeout(() => {
-    // Faites défiler le viewport jusqu'à la fin de la page en utilisant Locomotive Scroll
-    scroll.scrollTo(document.body.scrollHeight);
+    // Faites défiler le viewport jusqu'à la fin de la page
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" });
   }, 50);
 });

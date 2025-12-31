@@ -215,57 +215,39 @@
           <h2 data-scroll data-scroll-direction="horizontal" data-scroll-speed="-1" data-scroll-target="#couture" class="mtext-white mcenter text-en text-hidden" data-translation="couture-title">Sewing</h2>
           <!-- Ligne horizontale animée en scroll horizontal avec une vitesse de -7 et une largeur de 100% -->
           <hr data-scroll data-scroll-direction="horizontal" data-scroll-speed="1" data-scroll-target="#couture" style="width:100%" class="mopacity">   
-          <!-- Cette div contient des images de couture animées en scroll avec une vitesse de 2 -->
-          <div class="section-img"  data-scroll data-scroll-speed="2" data-scroll-target="#couture">
-            <!-- Div pour la première image -->
-            <div class="img--4 imgc1" data-scroll data-scroll-repeat="true"  data-scroll-target=".imgc1">
-              <!-- Lien vers l'image agrandie quand on clique dessus avec un effet de lightbox -->
+          <!-- Carousel CSS (scroll snap + scroll buttons/markers) -->
+          <ul class="couture-carousel" data-scroll data-scroll-target="#couture" aria-label="Galerie couture">
+            <li class="couture-carousel__slide">
               <a href="images/couture01_open.jpeg" data-lightbox="portfolioa">
-                <!-- Image de couture avec une classe pour la mise en forme -->
-                <img src="images/couture01.webp" alt="Robe Vionnet" class="couture-img">
+                <img src="images/couture01.webp" alt="Robe Vionnet" class="couture-img" loading="lazy">
               </a>
-            </div>
-            <!-- Div pour la deuxième image -->
-            <div class="img--4 imgc2" data-scroll data-scroll-repeat="true" data-scroll-target=".imgc2">
-              <!-- Lien vers l'image agrandie quand on clique dessus avec un effet de lightbox -->
+            </li>
+            <li class="couture-carousel__slide">
               <a href="images/couture02_open.jpeg" data-lightbox="portfolioa">
-                <!-- Image de couture avec une classe pour la mise en forme -->
-                <img src="images/couture02.webp" alt="Costume LoveCraft" class="couture-img">
+                <img src="images/couture02.webp" alt="Costume LoveCraft" class="couture-img" loading="lazy">
               </a>
-            </div>
-            <!-- Div pour la troisième image -->
-            <div class="img--4 imgc3" data-scroll data-scroll-repeat="true"  data-scroll-target=".imgc3">
-              <!-- Lien vers l'image agrandie quand on clique dessus avec un effet de lightbox -->
+            </li>
+            <li class="couture-carousel__slide">
               <a href="images/couture03_open.jpg" data-lightbox="portfolioa">
-                <!-- Image de couture avec une classe pour la mise en forme -->
-                <img src="images/couture03.webp" alt="Corset Edouardien" class="couture-img">
+                <img src="images/couture03.webp" alt="Corset Edouardien" class="couture-img" loading="lazy">
               </a>
-            </div>
-            <!-- Div pour la quatrième image -->
-            <div class="img--4 imgc4" data-scroll data-scroll-repeat="true"  data-scroll-target=".imgc4">
-              <!-- Lien vers l'image agrandie quand on clique dessus avec un effet de lightbox -->
+            </li>
+            <li class="couture-carousel__slide">
               <a href="images/couture04_open.jpeg" data-lightbox="portfolioa">
-                <!-- Image de couture avec une classe pour la mise en forme -->
-                <img src="images/couture04.webp" alt="Robe croisée" class="couture-img">
+                <img src="images/couture04.webp" alt="Robe croisée" class="couture-img" loading="lazy">
               </a>
-            </div>
-            <!-- Div pour la cinquième image animée en scroll horizontal avec une vitesse de -0.3 -->
-            <div data-scroll data-scroll data-scroll-repeat="true" class="img--2 imgc5"  data-scroll-target=".imgc5">
-              <!-- Lien vers l'image agrandie quand on clique dessus avec un effet de lightbox -->
+            </li>
+            <li class="couture-carousel__slide">
               <a href="images/couture05_open.jpeg" data-lightbox="portfolioa">
-                <!-- Image de couture avec une classe pour la mise en forme -->
-                <img src="images/couture05.webp" alt="Kimonos Lola" class="couture-img">
+                <img src="images/couture05.webp" alt="Kimonos Lola" class="couture-img" loading="lazy">
               </a>
-            </div>
-            <!-- Div pour la sixième image animée en scroll horizontal avec une vitesse de 0.3 -->
-            <div data-scroll data-scroll data-scroll-repeat="true" class="img--2 imgc6"  data-scroll-target=".imgc6">
-              <!-- Lien vers l'image agrandie quand on clique dessus avec un effet de lightbox -->
+            </li>
+            <li class="couture-carousel__slide">
               <a href="images/couture06_open.jpeg" data-lightbox="portfolioa">
-                <!-- Image de couture avec une classe pour la mise en forme -->
-                <img src="images/couture06.webp" alt="Robe 1900" class="couture-img">
+                <img src="images/couture06.webp" alt="Robe 1900" class="couture-img" loading="lazy">
               </a>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </section>
     </div>
@@ -562,7 +544,6 @@
     </div>
   </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js"></script>
 <script src="lightbox-plus-jquery.js"></script>
 <script src="index.js"></script>
 <script>

@@ -129,6 +129,120 @@ hr {
     margin-top: 35px;
 }
 
+#couture.mheight {
+  height: auto;
+  min-height: 100vh;
+  align-items: flex-start;
+}
+
+.couture-carousel {
+  list-style: none;
+  padding: 0;
+  margin: 35px auto 0;
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 12px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.couture-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.couture-carousel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+}
+
+.couture-carousel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.couture-carousel__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  margin: 0;
+}
+
+.couture-carousel__slide a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.couture-carousel__slide .couture-img {
+  width: 100%;
+  height: auto;
+  max-height: 260px;
+  margin-bottom: 0;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+.couture-carousel {
+  scroll-marker-group: after;
+}
+
+.couture-carousel::scroll-button(*) {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.couture-carousel::scroll-button(left) {
+  content: "←";
+}
+
+.couture-carousel::scroll-button(right) {
+  content: "→";
+}
+
+.couture-carousel::scroll-button(*):hover,
+.couture-carousel::scroll-button(*):focus-visible {
+  border-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.couture-carousel::scroll-button(*):disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.couture-carousel::scroll-marker-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.couture-carousel__slide::scroll-marker {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.couture-carousel__slide::scroll-marker:target-current {
+  background: #fff;
+  border-color: #fff;
+}
+
+@media screen and (max-width: 700px) {
+  .couture-carousel__slide .couture-img {
+    height: auto;
+    max-height: 200px;
+  }
+}
+
 .section-imgdes {
   display: flex;
   flex-wrap: wrap;
